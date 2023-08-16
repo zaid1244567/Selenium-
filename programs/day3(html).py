@@ -22,7 +22,7 @@ basic structure of html code:
 </html>
 
 steps to create a web-page:
----------------------------
+--------------------------
 *open notepad and type html code
 *save a file with .html extension
 
