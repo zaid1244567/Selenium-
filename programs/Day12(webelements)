@@ -1,0 +1,196 @@
+"""
+web-element methods
+-------------------
+"""
+"""
+*the return type of find_element() method is web-element.
+*an element present in web-page is called as web-element.
+*web-element like textfield, radio button, check-box, button , link, dropdown, etc...
+*a find_element() method will find the address of an element from a page and it will store in a variable, that variable
+refers to as web-element.
+*methods of web-elements are,
+1.click()
+    *it will perform click action on button,link,radio button, check box, tab, etc..
+2.send_keys()
+    *it is used to enter a data into text field.
+3.clear()
+    *it is used to remove a value present in text field.
+"""
+
+from selenium.webdriver import Chrome
+from time import sleep
+
+#ws to click on search field and search for facewash
+"""
+driver = Chrome()
+driver.get("https://mamaearth.in/")
+driver.maximize_window()
+sleep(5)
+src = driver.find_element("xpath", "//p[contains(@class,'styles_typicalWrapper')]")
+src.click()
+src_txt = driver.find_element("xpath", "//input[@id='searchInputWrapper']")
+src_txt.send_keys("facewash")
+"""
+
+#ws to clear/remove default value present in text field
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+un = driver.find_element("id", "a1")
+un.clear()
+un.send_keys("automation user")
+"""
+################################################################################################################################################################
+#25-08-2023
+"""
+4.is_enabled():
+    *it will return True if an element is enabled else it will return False if element is disabled.
+"""
+
+#ws to check username is enabled or not
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+un1 = driver.find_element("id", "a1")           #True
+un2 = driver.find_element("id", "a2")           #False
+print(un1.is_enabled())
+print(un2.is_enabled())
+"""
+
+#ws to validate register now button isdisabled or not
+"""
+driver = Chrome()
+driver.get("https://www.naukri.com/registration/createAccount?othersrcp=22636")
+register = driver.find_element("xpath", "//button[.='Register now']")
+if register.is_enabled():
+    print("register now button is-enabled")
+else:
+    print("register now button is-disabled")
+"""
+
+"""
+5.is_selected():
+****************
+*it will return True if checkbox/radion button is selected else it will return False if checkbox/radion button is not selected.
+*this method will work only if checkbox/radio button is developed by "input" tag.
+"""
+#wsto verify checkbox selected or not
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ch1 = driver.find_element("id", "a3")
+ch2 = driver.find_element("id", "a4")
+print(ch1.is_selected())                #False
+print(ch2.is_selected())                #True
+"""
+
+#ws to verify checkbox is selected or not in zomato
+"""
+driver = Chrome()
+driver.get("https://www.zomato.com/bangalore")
+driver.find_element("xpath", "//a[.='Sign up']").click()
+ch = driver.find_element("xpath", "//input[@type='checkbox']")
+print(ch.is_selected())             #False
+ch.click()
+print(ch.is_selected())             #True
+"""
+
+#example on check box develope by other tag
+"""
+driver = Chrome()
+driver.get("https://www.naukri.com/registration/createAccount?othersrcp=22636")
+ch = driver.find_element("xpath", "//a[contains(@class,'checkbox-wrap on')]")
+print(ch.is_selected())         #False
+"""
+
+"""
+assignment:
+-----------
+*enter all details and verify register now button is enabled or not
+https://www.naukri.com/registration/createAccount?othersrcp=22636
+*enter all fields in zomata signup and validate signup is enabled or not
+https://www.zomato.com/bangalore
+*ws to verify "yes and no" radio button in passport
+https://portal2.passportindia.gov.in/AppOnlineProject/user/RegistrationBaseAction?request_locale=en
+*ws to verify Terms and condition check box is selected or not
+https://www.ksrtc.in/oprs-web/login/perform.do
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+how to launch browser without passing driver executable path:
+*************************************************************
+*goto below location/path and paste all driver executable files.
+C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\Scripts
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
