@@ -1,0 +1,290 @@
+"""
+web-element methods
+-------------------
+"""
+"""
+*the return type of find_element() method is web-element.
+*an element present in web-page is called as web-element.
+*web-element like textfield, radio button, check-box, button , link, dropdown, etc...
+*a find_element() method will find the address of an element from a page and it will store in a variable, that variable
+refers to as web-element.
+*methods of web-elements are,
+1.click()
+    *it will perform click action on button,link,radio button, check box, tab, etc..
+2.send_keys()
+    *it is used to enter a data into text field.
+3.clear()
+    *it is used to remove a value present in text field.
+"""
+
+from selenium.webdriver import Chrome
+from time import sleep
+
+#ws to click on search field and search for facewash
+"""
+driver = Chrome()
+driver.get("https://mamaearth.in/")
+driver.maximize_window()
+sleep(5)
+src = driver.find_element("xpath", "//p[contains(@class,'styles_typicalWrapper')]")
+src.click()
+src_txt = driver.find_element("xpath", "//input[@id='searchInputWrapper']")
+src_txt.send_keys("facewash")
+"""
+
+#ws to clear/remove default value present in text field
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+un = driver.find_element("id", "a1")
+un.clear()
+un.send_keys("automation user")
+"""
+################################################################################################################################################################
+#25-08-2023
+"""
+4.is_enabled():
+    *it will return True if an element is enabled else it will return False if element is disabled.
+"""
+
+#ws to check username is enabled or not
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+un1 = driver.find_element("id", "a1")           #True
+un2 = driver.find_element("id", "a2")           #False
+print(un1.is_enabled())
+print(un2.is_enabled())
+"""
+
+#ws to validate register now button isdisabled or not
+"""
+driver = Chrome()
+driver.get("https://www.naukri.com/registration/createAccount?othersrcp=22636")
+register = driver.find_element("xpath", "//button[.='Register now']")
+if register.is_enabled():
+    print("register now button is-enabled")
+else:
+    print("register now button is-disabled")
+"""
+
+"""
+5.is_selected():
+****************
+*it will return True if checkbox/radion button is selected else it will return False if checkbox/radion button is not selected.
+*this method will work only if checkbox/radio button is developed by "input" tag.
+"""
+#wsto verify checkbox selected or not
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ch1 = driver.find_element("id", "a3")
+ch2 = driver.find_element("id", "a4")
+print(ch1.is_selected())                #False
+print(ch2.is_selected())                #True
+"""
+
+#ws to verify checkbox is selected or not in zomato
+"""
+driver = Chrome()
+driver.get("https://www.zomato.com/bangalore")
+driver.find_element("xpath", "//a[.='Sign up']").click()
+ch = driver.find_element("xpath", "//input[@type='checkbox']")
+print(ch.is_selected())             #False
+ch.click()
+print(ch.is_selected())             #True
+"""
+
+#example on check box develope by other tag
+"""
+driver = Chrome()
+driver.get("https://www.naukri.com/registration/createAccount?othersrcp=22636")
+ch = driver.find_element("xpath", "//a[contains(@class,'checkbox-wrap on')]")
+print(ch.is_selected())         #False
+"""
+
+"""
+assignment:
+-----------
+*enter all details and verify register now button is enabled or not
+https://www.naukri.com/registration/createAccount?othersrcp=22636
+*enter all fields in zomata signup and validate signup is enabled or not
+https://www.zomato.com/bangalore
+*ws to verify "yes and no" radio button in passport
+https://portal2.passportindia.gov.in/AppOnlineProject/user/RegistrationBaseAction?request_locale=en
+*ws to verify Terms and condition check box is selected or not
+https://www.ksrtc.in/oprs-web/login/perform.do
+"""
+################################################################################################################################################
+#26-08-2023
+"""
+is_displayed():
+    *it will return True if the element is present in webpage else it will throw "NoSuchElementException" exception.
+"""
+#ws to verify login button is present or not
+"""
+driver = Chrome()
+driver.get("https://www.ksrtc.in/oprs-web/login/perform.do")
+driver.maximize_window()
+login = driver.find_element("xpath", "//input[@value='Login']")
+print(login.is_displayed())       #True
+log = driver.find_element("xpath", "//input[@value='Logi']")
+print(log.is_displayed())           #NoSuchElementException
+"""
+####################################################################################################################################
+"""
+get_attribute():
+    *it will return attribute of a specified attribute name.
+    *if the attribute is not present it will return "None".
+*basically we use this method to extract tool tip value.
+"""
+
+#ws to get the attribute of href
+"""
+driver = Chrome()
+driver.get("https://www.wikipedia.org/")
+english = driver.find_element("xpath", "(//a[@class='link-box'])[1]")
+avalue = english.get_attribute("href")
+print(avalue)           #https://en.wikipedia.org/
+"""
+
+#ws to print tool tip of englisg link in wikipedia
+"""
+driver = Chrome()
+driver.get("https://www.wikipedia.org/")
+english = driver.find_element("xpath", "(//a[@class='link-box'])[1]")
+avalue = english.get_attribute("title")
+print(avalue)           #English — Wikipedia — The Free Encyclopedia
+"""
+
+#ws to print tool tip of google apps
+"""
+driver = Chrome()
+driver.get("https://www.google.com")
+account = driver.find_element("xpath", "//a[@class='gb_d']")
+value = account.get_attribute("aria-labeler")
+print(value)                #Google apps
+"""
+
+"""
+property's in web-elements:
+**************************
+text:
+    *it wll return a text of a specified element in webpage.
+tag_name:
+    *it will return tag-name of a specified element in webpage.
+size:
+    *it will return height and width of an element in a webpage.
+location:
+    *it will return x and y coordinate of an element in a webpage 
+rext:    
+    *it will return height,width,x,y of an element in a webpage 
+"""
+#ws to pritint text of women in ajio
+"""
+driver = Chrome()
+driver.get("https://www.ajio.com/")
+driver.maximize_window()
+foot = driver.find_element("xpath", "//a[@href='/shop/women']")
+print(foot.text)                #WOMEN
+"""
+
+#ws to extract print of earpodin apple.com
+"""
+driver = Chrome()
+driver.get("https://www.apple.com/in/shop/accessories/all/headphones-speakers?f=apple-overear-sport&fh=47d1%2B3214%2B45aa%2B45ab&page=1")
+driver.maximize_window()
+earpod = driver.find_element("xpath", "//a[@data-evar11='MQD83|category']")
+print(earpod.text)                #AirPods Pro (2nd generation)
+"""
+
+#ws to extract print of earpodin in apple.com and verify
+"""
+driver = Chrome()
+driver.get("https://www.apple.com/in/shop/accessories/all/headphones-speakers?f=apple-overear-sport&fh=47d1%2B3214%2B45aa%2B45ab&page=1")
+driver.maximize_window()
+earpod = driver.find_element("xpath", "//a[@data-evar11='MQD83|category']")
+if earpod.text=='AirPods Pro (2nd generation)':
+    print("AIRPOD element present")
+else:
+    print("AIRPOD element not present DEFECT")
+"""
+
+#ws to print tag-name of a phone icon in byjus
+"""
+driver = Chrome()
+driver.get("https://byjus.com/")
+driver.maximize_window()
+call = driver.find_element("xpath", "//img[@class='call-icon']")
+print(call.tag_name)            #img
+"""
+
+#ws to print height,width,x and y cordinate of an english link in wikipedia
+"""
+driver = Chrome()
+driver.get("https://www.wikipedia.org/")
+sleep(3)
+eng = driver.find_element("xpath", "//strong[.='English']")
+s = eng.size
+print(s)                #{'height': 24, 'width': 156}
+l = eng.location
+print(l)                #{'x': 298, 'y': 137}
+r = eng.rect
+print(r)                #{'height': 24, 'width': 156, 'x': 297.90625, 'y': 137.25}
+"""
+
+"""
+how to launch browser without passing driver executable path:
+*************************************************************
+*goto below location/path and paste all driver executable files.
+C:\\Users\\Admin\\AppData\\Local\\Programs\\Python\\Python311\\Scripts
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
