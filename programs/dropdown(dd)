@@ -1,0 +1,20 @@
+<html>
+<body>
+Subject:<select id="a1">
+<option  value="v1">Manual</option>
+<option  value="v2">SQL</option>
+<option  value="v3">Selenium</option>
+<option  value="v4">Python</option>
+<option  value="v5">Api</option>
+</select>&nbsp&nbsp&nbsp&nbsp
+
+Timings:<select id="a2" multiple>
+<option  value="v11">7-9AM</option>
+<option  value="v22">11-1PM</option>
+<option  value="v33">12-2PM</option>
+<option  value="v44">2-4PM</option>
+<option  value="v55">4-6PM</option>
+<option  value="v66">7-9PM</option>
+<select>
+</body>
+</html>
