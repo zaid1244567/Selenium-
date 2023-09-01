@@ -1,0 +1,195 @@
+"""
+ActionChain class:
+------------------
+"""
+"""
+*we use actions chains class for below usage,
+1.mouse hover action
+    *to mouse hover on any element in a webpage we use move_to_element() method.
+2.double click
+    *to perform double click on any element in webpage we go double_click() method.
+3.drag and drop
+    *to perform drag and drop in webpage we use drag_and_drop() method.
+4.right click
+    *to perform right click on any element in a webpage we use context_click() method.
+
+syntax:
+-------
+from selenium.webdriver.common.action_chains import ActionChains
+a = ActionChains(driver)
+
+*action chains class will accept "driver" as an argument.
+*when ever we are using any action chains class method it is mandatory to write .perform() method. 
+"""
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver import Chrome
+from time import sleep
+
+#ws to mouse hover on fashions in flipkart
+"""
+driver = Chrome()
+driver.get("https://www.flipkart.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//button[.='✕']").click()
+fashion = driver.find_element("xpath", "(//div[.='Fashion'])[3]")
+a = ActionChains(driver)
+a.move_to_element(fashion).perform()
+"""
+
+#ws to mousehover on study material and click on Frank solutions for class 10
+"""
+driver = Chrome()
+driver.get("https://byjus.com/")
+driver.maximize_window()
+study = driver.find_element("xpath", "//a[.='Study Materials']")
+a = ActionChains(driver)
+a.move_to_element(study).perform()
+icse = driver.find_element("xpath", "(//a[.='ICSE'])[1]")
+a.move_to_element(icse).perform()
+frank = driver.find_element("xpath", "//a[.='Frank Solutions']")
+a.move_to_element(frank).perform()
+driver.find_element("xpath", "//a[.='Frank Solutions for Class 10 Maths']").click()
+"""
+
+#ws to perform double click on element in sample webpage
+"""
+driver = Chrome()
+driver.get("https://demo.guru99.com/test/simple_context_menu.html")
+driver.maximize_window()
+double = driver.find_element("xpath", "//button[.='Double-Click Me To See Alert']")
+a= ActionChains(driver)
+sleep(2)
+a.double_click(double).perform()
+"""
+
+#ws to perform drag and drop in sample webpage
+"""
+driver = Chrome()
+driver.get("https://jqueryui.com/resources/demos/droppable/default.html")
+src = driver.find_element("xpath", "//div[@id='draggable']")
+dest = driver.find_element("xpath", "//div[@id='droppable']")
+a = ActionChains(driver)
+sleep(2)
+a.drag_and_drop(src, dest).perform()
+"""
+
+#ws to perform right click on men tab in meesho
+"""
+driver = Chrome()
+driver.get("https://www.meesho.com/")
+driver.maximize_window()
+men = driver.find_element("xpath", "(//span[.='Men'])[1]")
+a = ActionChains(driver)
+a.context_click(men).perform()
+"""
+
+"""
+assignment:
+-----------
+mouse hover on study material-->mouse hover on CBSE--> mouse hover on physics --> print all options.
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
