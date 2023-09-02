@@ -1,0 +1,108 @@
+#01-09-2023
+from selenium.webdriver import  Chrome
+from time import sleep
+
+"""
+popup:
+------
+"""
+"""
+*a small window (or) tab is called as popuop.
+*popup is classified into 5 types,
+1.alert and confirmation/javascript popup
+2.hidden division popup
+3.file upload popup
+4.file download popup
+5.window popup/child browser popup
+"""
+"""
+1.alert and confirmation/javascript popup:
+******************************************
+*this popup is classified into 2 types.
+1.simple alert     
+    *this popup will consist of single option either "ok"/"cancel".
+2.alert and confirmation
+    *this popup will consist of both "ok" and "cancel" option.
+
+*to handle this popup we should switch control from webpage to alert by following method,
+    a = driver.switch_to.alert
+*to click on "ok" button we use "accept()" method, to click on "cancel" button we use "dismiss()" method.
+*only for "simple alert" we can use both methods.
+*for "alert and confirmation" for ok use accept() and for cancel use dismiss().
+*if we perform both "accept() and dismiss()" method then it will throw 
+        "NoAlertPresentException: Message: no such alert"
+*we can't perform any action on webpage until we handle the popup.
+*to get the text of alert we use ".text" property.
+
+characteristic:
+---------------
+*we can't drag/move the popup.
+*we can't inspect the popup.
+"""
+
+#ws to handle simple alert in demowebshop
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//input[@value='Search']").click()
+alert = driver.switch_to.alert
+sleep(2)
+alert.accept()
+    #(or)
+#alert.dismiss()
+#NoAlertPresentException: Message: no such alert
+"""
+
+#ws to print text of a alert and click on ok
+"""
+driver = Chrome()
+driver.get("https://epfoportals.epfindia.gov.in/iwu/")
+driver.maximize_window()
+driver.find_element("xpath", "//button[.='LogIn']").click()
+alert = driver.switch_to.alert
+print(alert.text)       #User name or password field can  not be empty!
+alert.accept()
+"""
+
+#ws to click on "ok" in alert and confirmation popup
+"""
+driver = Chrome()
+driver.get("https://licindia.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//a[contains(.,'Login')])[2]").click()
+alt = driver.switch_to.alert
+alt.accept()
+"""
+
+#ws to click on "cancel" in alert and confirmation popup
+"""
+driver = Chrome()
+driver.get("https://licindia.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//a[contains(.,'Login')])[2]").click()
+alt = driver.switch_to.alert
+alt.dismiss()
+"""
+
+"""
+assignment:
+-----------
+handle simple alert in alert in below application
+https://www.ksrtc.in/oprs-web/login/show.do
+https://unifiedportal-epfo.epfindia.gov.in/publicPortal/no-auth/misReport/home/loadSearchTrrnHome
+
+handle simple and confirmation alert in alert in below application
+https://demoqa.com/alerts
+(click on last "click me" button --> enter ur name and click on "ok")
+https://demo.guru99.com/test/delete_customer.php
+
+"""
+
+
+
+
+
+
+
+
