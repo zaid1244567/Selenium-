@@ -1,0 +1,280 @@
+#01-09-2023
+from selenium.webdriver import  Chrome
+from time import sleep
+
+"""
+popup:
+------
+"""
+"""
+*a small window (or) tab is called as popuop.
+*popup is classified into 5 types,
+1.alert and confirmation/javascript popup
+2.hidden division popup
+3.file upload popup
+4.file download popup
+5.window popup/child browser popup
+"""
+"""
+1.alert and confirmation/javascript popup:
+******************************************
+*this popup is classified into 2 types.
+1.simple alert     
+    *this popup will consist of single option either "ok"/"cancel".
+2.alert and confirmation
+    *this popup will consist of both "ok" and "cancel" option.
+
+*to handle this popup we should switch control from webpage to alert by following method,
+    a = driver.switch_to.alert
+*to click on "ok" button we use "accept()" method, to click on "cancel" button we use "dismiss()" method.
+*only for "simple alert" we can use both methods.
+*for "alert and confirmation" for ok use accept() and for cancel use dismiss().
+*if we perform both "accept() and dismiss()" method then it will throw 
+        "NoAlertPresentException: Message: no such alert"
+*we can't perform any action on webpage until we handle the popup.
+*to get the text of alert we use ".text" property.
+
+characteristic:
+---------------
+*we can't drag/move the popup.
+*we can't inspect the popup.
+"""
+
+#ws to handle simple alert in demowebshop
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//input[@value='Search']").click()
+alert = driver.switch_to.alert
+sleep(2)
+alert.accept()
+    #(or)
+#alert.dismiss()
+#NoAlertPresentException: Message: no such alert
+"""
+
+#ws to print text of a alert and click on ok
+"""
+driver = Chrome()
+driver.get("https://epfoportals.epfindia.gov.in/iwu/")
+driver.maximize_window()
+driver.find_element("xpath", "//button[.='LogIn']").click()
+alert = driver.switch_to.alert
+print(alert.text)       #User name or password field can  not be empty!
+alert.accept()
+"""
+
+#ws to click on "ok" in alert and confirmation popup
+"""
+driver = Chrome()
+driver.get("https://licindia.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//a[contains(.,'Login')])[2]").click()
+alt = driver.switch_to.alert
+alt.accept()
+"""
+
+#ws to click on "cancel" in alert and confirmation popup
+"""
+driver = Chrome()
+driver.get("https://licindia.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//a[contains(.,'Login')])[2]").click()
+alt = driver.switch_to.alert
+alt.dismiss()
+"""
+
+"""
+assignment:
+-----------
+handle simple alert in alert in below application
+https://www.ksrtc.in/oprs-web/login/show.do
+https://unifiedportal-epfo.epfindia.gov.in/publicPortal/no-auth/misReport/home/loadSearchTrrnHome
+handle simple and confirmation alert in alert in below application
+https://demoqa.com/alerts
+(click on last "click me" button --> enter ur name and click on "ok")
+https://demo.guru99.com/test/delete_customer.php
+"""
+################################################################################################################################
+#02-09-2023
+#handle simple and confirmation alert in alert in below application
+"""
+driver = Chrome()
+driver.get("https://demoqa.com/alerts")
+driver.maximize_window()
+sleep(4)
+driver.find_element("xpath", "//button[@id='promtButton']").click()
+alt = driver.switch_to.alert
+sleep(2)
+alt.send_keys("hai")
+alt.accept()
+"""
+#################################################################################################################################
+"""
+2.hidden division popup():
+**************************
+*initially a popup will be hidden, when we perform click action a popup will appear is called as hidden division popup.
+*we can handle hidden division popup by click() method.
+
+characteristic:
+---------------
+*we can't drag/move the popup.
+*we can inspect the popup.
+"""
+
+#ws to click on account in redbus
+"""
+driver = Chrome()
+driver.get("https://www.redbus.in/")
+driver.find_element("xpath", "//span[.='Account']").click()
+driver.find_element("xpath", "//span[.='Login/ Sign Up']").click()
+"""
+
+#ws to selecr date of departure
+"""
+driver = Chrome()
+driver.get("https://www.ksrtc.in/oprs-web/")
+driver.maximize_window()
+driver.find_element("xpath", "//input[@value='Date Of Departure']").click()
+sleep(1)
+driver.find_element("xpath", "//a[.='5']").click()
+"""
+########################################################################################################################
+"""
+3.child browser/window popup:
+*****************************
+*multiple tab/window inside a browser is called as child browser/window popup. 
+*always control will present in main page/parent page(launched webpage).
+*to handle this popup we use following property,
+    *driver.current_window_handle
+        *this property will return parent window address
+    *driver.window_handles
+        *this property will return list of parent followed by child window address
+*to switch to a child window/tab we use following method,
+    driver.switch_to.window(window_address)
+"""
+#ws to click on settings in twitter tab
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+sleep(3)
+driver.find_element("xpath", "//a[@href='/settings']").click()
+#selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element:
+"""
+
+#ws to print parent and child tab address
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+pid = driver.current_window_handle
+print(pid)                      #91651D169B1141552B2D3DE151A7DD95
+ids = driver.window_handles
+print(ids)                      #['91651D169B1141552B2D3DE151A7DD95', 'DEBD143E6EC801941F7827C4EDCB9A0F', 'BF0F6747DA56044F7ED068430B21C2E1', '7512AD3D9886E6F90251B916C4736BD4']
+"""
+
+#ws to print parent and child tab title
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+ids = driver.window_handles             #[parent_id, child1_id, child2_id, child3_id]
+for id in ids:
+    driver.switch_to.window(id)
+    sleep(3)
+    print(driver.title)
+# Demo Web Shop
+# nopCommerce (@nopCommerce) / X
+# What you need to know about the sunset of consumer Google+ on April 2 | Google Workspace Blog
+# NopCommerce | Facebook
+"""
+
+#ws to print all child tab title
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+ids = driver.window_handles         #[parent_id, child1_id, child2_id, child3_id]
+for id in ids[1:]:
+    driver.switch_to.window(id)
+    sleep(3)
+    print(driver.title)
+# What you need to know about the sunset of consumer Google+ on April 2 | Google Workspace Blog
+# NopCommerce | Facebook
+# nopCommerce (@nopCommerce) / X
+"""
+
+#ws to close all tabs(parent+child)
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+ids = driver.window_handles         #[parent_id, child1_id, child2_id, child3_id]
+for id in ids:
+    driver.switch_to.window(id)
+    sleep(2)
+    driver.close()
+"""
+
+#ws to close all child tab
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+ids = driver.window_handles         #[parent_id, child1_id, child2_id, child3_id]
+for id in ids[1:]:
+    driver.switch_to.window(id)
+    sleep(2)
+    driver.close()
+"""
+
+#ws to close parent tab
+"""
+driver = Chrome()
+driver.get("https://demowebshop.tricentis.com/")
+driver.maximize_window()
+driver.find_element("xpath", "//a[.='Facebook']").click()
+driver.find_element("xpath", "//a[.='Google+']").click()
+driver.find_element("xpath", "//a[.='Twitter']").click()
+driver.close()
+"""
+
+"""
+assignment:
+-----------
+select a user defined date in ksrtc
+https://www.ksrtc.in/oprs-web/
+ws to click on facebook, twitter, google+ link and switch to twitter page then click on settings
+https://demowebshop.tricentis.com/
+ws to click on login/create account --> click on google icon --> print title of child n parent tab -->
+click on create new account --> enter user name
+"""
+
+
+
+
+
+
+
+
+
