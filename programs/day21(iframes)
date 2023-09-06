@@ -1,0 +1,160 @@
+"""
+handling frames:
+----------------
+"""
+
+"""
+*a webpage inside another webpage is called as frames/nested web-page/embeded frames.
+*to develop frames developer use <iframe> tag.
+*always control will present in main page/parent page, to switch a control from parent to child page we use following method.
+*frame() method will accept 3 different type of arguments that is index(integer), name(string), web-element
+    driver.switch_to.frame(index)   
+        *index starts from 0
+    driver.switch_to.frame("name")
+        *iframe tag should consist of "name" attribute then it will work, if any other attribute value
+        if we specify then it will throw error.
+    driver.switch_to.frame(web-element)
+        *it will accept only web-element.
+*when we are switching to a frame and if a frme is not present then it will throw "noSuchFrame Exception".
+
+*to switch control from child to parent we have 2 methods,
+    *driver.switch_to.parent_frame()
+        *it will switch to immediate parent
+    *driver.switch_to.default_content()
+        *it will switch to any of the parent.
+        
+"""
+
+from selenium.webdriver import Chrome
+from time import sleep
+
+#ws to switch to child1 and send a message
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.find_element("id", "a2").send_keys("child1 frame")
+# no such element: Unable to locate element:
+"""
+
+#ws to switch to frame by index as argument
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.switch_to.frame(0)
+driver.find_element("id", "a2").send_keys("child1 frame")
+sleep(2)
+driver.switch_to.frame(0)
+driver.find_element("id", "a3").send_keys("child2 frame")
+"""
+
+#ws to switch to frame by name as argument
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.switch_to.frame("v1")
+driver.find_element("id", "a2").send_keys("child1 frame")
+sleep(2)
+driver.switch_to.frame("v2")
+driver.find_element("id", "a3").send_keys("child2 frame")
+"""
+
+#ws to switch to frame by web-element as argument
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+frame1 = driver.find_element("xpath", "//iframe[@id='f1']")
+driver.switch_to.frame(frame1)
+driver.find_element("id", "a2").send_keys("child1 frame")
+sleep(2)
+frame2 = driver.find_element("xpath", "//iframe[@id='f2']")
+driver.switch_to.frame(frame2)
+driver.find_element("id", "a3").send_keys("child2 frame")
+"""
+
+#example on "nosuchframe exception"
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.switch_to.frame("v3")
+driver.find_element("id", "a2").send_keys("child1 frame")
+#NoSuchFrameException: Message: v3
+"""
+
+#ws to switch back from child to immediate parent
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.switch_to.frame("v1")
+driver.find_element("id", "a2").send_keys("child1 frame")
+sleep(2)
+driver.switch_to.frame("v2")
+driver.find_element("id", "a3").send_keys("child2 frame")
+sleep(2)
+driver.switch_to.parent_frame()
+driver.find_element("id", "a2").send_keys("back to immediate parent")
+"""
+
+#ws to switch back from child to any parent
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+driver.maximize_window()
+driver.find_element("id", "a1").send_keys("parent frame")
+sleep(2)
+driver.switch_to.frame("v1")
+driver.find_element("id", "a2").send_keys("child1 frame")
+sleep(2)
+driver.switch_to.frame("v2")
+driver.find_element("id", "a3").send_keys("child2 frame")
+sleep(2)
+driver.switch_to.default_content()
+driver.find_element("id", "a1").send_keys("back to any parent")
+"""
+##########################################################################################################################################
+#ws to enter mobile number in redbus login page
+"""
+driver = Chrome()
+driver.get("https://www.redbus.in/")
+driver.maximize_window()
+driver.find_element("xpath", "//span[.='Account']").click()
+driver.find_element("xpath", "//span[.='Login/ Sign Up']").click()
+sleep(3)
+frame = driver.find_element("xpath", "//iframe[@class='modalIframe']")
+driver.switch_to.frame(frame)
+sleep(4)
+driver.find_element("xpath", "//input[@type='number']").send_keys("566565454")
+"""
+"""
+assignment question:
+--------------------
+navigate to below application and click on adhar tweet on right navigation panel
+https://uidai.gov.in/en/
+"""
+
+
+
+
+
+
+
+
+
+
