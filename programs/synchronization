@@ -1,0 +1,128 @@
+"""
+synchronization:
+****************
+"""
+from selenium.webdriver import Chrome
+from time import sleep
+"""
+synchronization:
+----------------
+*the process of matching the speed (or) wavelength is called as synchronization.
+                        (or)
+*the process of matching the speed of selenium with application is called as synchronization.
+*selenium is very faster when compare to application.
+*to synch selenium with application we use below types,
+    *there are 4 types of synchronization,
+    1.sleep()
+    2.implicit wait
+    3.explicit wait
+    4.fluent wait
+
+1.sleep():
+==========
+*it is a method which is used to pause/stop the execution for certain period of time.
+*it wil wait until the specified time duration.
+
+drawback:
+---------
+*if element is visible within less than specified time duration then it will wait complete specified time duration.
+(because of these execution time will be more/waste if time)
+*in a single webpage if we have 'n' element to be wait/sync then we should write 'n' times sleep(), bcz of this
+code length will be increase and it is not a optimized code.
+
+2.implicit wait():
+------------------
+*to over come the draw back of sleep() method we use implicit wait().
+*it will sync only for find_element() and find_elements() methods.
+*if the "element is visible" less than specified time duration then it will not wait the remaining specified time,
+it will ignore the remaining time and it will continue the next line execution.
+*in a single webpage if we have 'n' elements, single implicit wait will sync all the 'n' elements.
+*if the "element is not visible" within the specified time duration then it will raise "NoSuchElement Exception".
+syntax:
+------
+    driver.implicitly_wait(10)
+                            |--->time should be in seconds
+"""
+
+#example on without synchronization
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+#ElementNotInteractableException: Message: element not interactable
+"""
+"""
+*according to above example we will get exception, because application is taking more time to load, but selenium
+is fastly trying to perform the action, so we will get execption.
+*to handle this we go synchronization.
+"""
+
+#example on sleep()
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+sleep(15)
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+"""
+"""
+*in the above example DOM is visible within 10seconds but it will wait for complete time duration, it is a brawback of lseep.
+*to overcome this will go implicitly_wait()
+"""
+
+#example on implicit wait
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+driver.implicitly_wait(15)
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+"""
+
+#example on implicit wait
+"""
+driver = Chrome()
+driver.get("https://vtu.ac.in/en/?s=vtu+results")
+driver.maximize_window()
+driver.implicitly_wait(15)
+driver.find_element("xpath", "//span[.='Online Degree']").click()
+ids = driver.window_handles
+driver.switch_to.window(ids[1])
+driver.find_element("xpath", "//a[.=' apply now ']").click()
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
