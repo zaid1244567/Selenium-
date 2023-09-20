@@ -1,0 +1,1508 @@
+import pytest
+"""
+pytest:
+*******
+"""
+"""
+pytest:
+*******
+*pytest is a unit-testing framework basically developer will be used.
+*pytest will be used by QA for following reason,
+    *to run test function/method automatically.
+    *to run multiple testcase at oneshot.
+    *to generate reports.
+    *to achieve parallel execution(compatibility).
+
+steps to install pytest:
+************************
+click on file-->click on settings-->click on project-->click python interpreter-->click on plus icon
+-->search for pytest-->click on specify version(latest version)-->click on install package.
+
+naming convensition for pytest:
+*******************************
+*function/method name should be starts with test keyword(test_*).
+*class name should starts with Test keyword and 1st letter should be capital(Test_*) and pytest class should
+not consist of constructor(__init__).
+*module name can starts with test (or) end with test keyword(test_* (or) *_test).
+
+how to run pytest function/class:
+*********************************
+*copy the path where pytest function/file is present(right click on folder-->click on copy path-->click on absolute path)
+*open cmd --> change directory by below command
+    >>cd path_of_pytest_file
+    >>pytest -vs pytest_filename.py
+
+v->verbosity
+s->scripting    
+*vs is used to get the output/message in detailed format.
+
+note:
+-----
+*a function which starts with test keyword is called as test function/method
+*a class which starts with test keyword is called as test class.
+*a module start/end with test keyword is called as test module.
+"""
+#function calling
+"""
+def compose_tc():
+    print("compose testcase")
+def inbox_tc():
+    print("inbox testcase")
+# compose_tc()            #compose testcase
+# inbox_tc()              #inbox testcase
+"""
+
+#method calling
+"""
+class Gmail:
+    def spam_tc(self):
+        print("spam testcase")
+# g = Gmail()
+# g.spam_tc()             #spam testcase
+"""
+"""
+*according to above examples function/method will execute only when ever it is called or invoke.
+*we want a concept a function/method should get execute automatically(implicitly) then go "pytest".
+"""
+##############################################################################################################
+#function level
+#test function
+"""
+def testcompose():
+    print("composing a mail")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 1 item
+
+pyconcept.py::testcompose composing a mail
+PASSED
+"""
+#non-test function
+"""
+def compose_test():
+    print("compose test case")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+"""
+#multiple test function
+"""
+def test_login():
+    print("login testcase")
+def test_signup():
+    print("signup testcase")
+def test_register():
+    print("register testcase")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_login login testcase
+PASSED
+pyconcept.py::test_signup signup testcase
+PASSED
+pyconcept.py::test_register register testcase
+PASSED
+"""
+
+#combination of test and normal function
+"""
+def test_login():
+    print("login testcase")
+def signup():
+    print("signup testcase")
+def test_register():
+    print("register testcase")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::test_login login testcase
+PASSED
+pyconcept.py::test_register register testcase
+PASSED
+"""
+
+#normal/non test function
+"""
+def login():
+    print("login testcase")
+def signup():
+    print("signup testcase")
+def register():
+    print("register testcase")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+"""
+###########################################################################################################
+#class and method level
+#testclass and test method
+"""
+class Test_Gmail:
+    def test_TC1(self):
+        print("Testcase1")
+    def test_TC2(self):
+        print("testcase2")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::Test_Gmail::test_TC1 Testcase1
+PASSED
+pyconcept.py::Test_Gmail::test_TC2 testcase2
+PASSED
+"""
+
+#normal class and test method
+"""
+class Gmail:
+    def test_TC1(self):
+        print("Testcase1")
+    def test_TC2(self):
+        print("testcase2")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+"""
+
+#test class with normal and test method
+"""
+class TestGmail:
+    def TC1(self):
+        print("Testcase1")
+    def test_TC2(self):
+        print("testcase2")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 1 item
+
+pyconcept.py::TestGmail::test_TC2 testcase2
+PASSED
+"""
+
+#test class with normal method
+"""
+class TestGmail:
+    def TC1(self):
+        print("Testcase1")
+    def TC2(self):
+        print("testcase2")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+"""
+
+#test class with normal and test method and constructor
+"""
+class Test_FB:
+    def __init__(self):
+        print("in a constructor")
+    def test_login(self):
+        print("login page")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+PytestCollectionWarning: cannot collect test class 'Test_FB' because it has a __init__ constructor (from: pyconcept.py)
+"""
+#the above we are gerring error because a class consist of constructor, constructor will get execute
+#only when we create a object, but test class is impicitly callable we no need to create an object.
+
+#multiple test class with test method
+"""
+class Test_Fb:
+    def test_tc1(self):
+        print("fb testcase1")
+
+class Test_Gmail:
+    def test_tc2(self):
+        print("gmail testcase")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::Test_Fb::test_tc1 fb testcase1
+PASSED
+pyconcept.py::Test_Gmail::test_tc2 gmail testcase
+PASSED
+"""
+
+#multiple test class with test method and normal method
+"""
+class Test_Fb:
+    def test_tc1(self):
+        print("fb testcase1")
+
+class Test_Gmail:
+    def tc2(self):
+        print("gmail testcase")
+    def test_tc3(self):
+        print("gmail testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::Test_Fb::test_tc1 fb testcase1
+PASSED
+pyconcept.py::Test_Gmail::test_tc3 gmail testcase3
+PASSED
+"""
+
+#multiple class with test method
+"""
+class Fb:
+    def test_tc1(self):
+        print("fb testcase1")
+
+class Gmail:
+    def test_tc2(self):
+        print("gmail testcase")
+    def test_tc3(self):
+        print("gmail testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 0 items
+"""
+#########################################################################################################################################
+#13-09-2023
+#module level
+"""
+def test_tc1():
+    print("test function")
+
+class Test_App:
+    def test_tc2(self):
+        print("test method1")
+    def tc3(self):
+        print("test method2")
+
+class Demo:
+    def test_tc3(self):
+        print("test method3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::test_tc1 test function
+PASSED
+pyconcept.py::Test_App::test_tc2 test method1
+PASSED
+"""
+####################################################################################################################
+"""
+batch execution(batch_pytest_concept)
+"""
+####################################################################################################################
+"""
+markers:
+--------
+*pytest markers are classified into 2 types,
+    1.custom markers
+    2.built-in markers
+    
+Pytest custom markers
+=====================
+ @pytest.mark is a decorator used to add the metadata to the test.
+ Metadata : details about the data.
+Grouping test cases using custom markers
+ We can create custom markers by using, @pytest.mark.markerName
+ We can group the test cases.
+ To execute: pytest filename.py –vs –m “name of the marker”
+
+ To execute multiple markers: 
+o pytest filename.py –vs –m “marker1 or marker2”  executes testcases which are 
+marked with either marker1 or marker2
+o pytest filename.py –vs –m “marker1 and marker2”  executes the testcases which are 
+marked with both marker1 and marker2.
+o pytest filename.py –vs –m “not marker2”  executes the testcases which are not 
+marked with marker2.
+"""
+#function level
+"""
+@pytest.mark.smoke
+def test_login():
+    print("login page")
+@pytest.mark.smoke
+def test_compose():
+    print("compose page")
+def test_tras():
+    print("tash module")
+def test_bin():
+    print("bin module")
+@pytest.mark.smoke
+def test_inbox():
+    print("inbox module")
+"""
+"""
+>pytest -vs -m smoke pyconcept.py
+collected 5 items / 2 deselected / 3 selected
+
+pyconcept.py::test_login login page
+PASSED
+pyconcept.py::test_compose compose page
+PASSED
+pyconcept.py::test_inbox inbox module
+PASSED
+"""
+
+"""
+@pytest.mark.smoke
+def test_login():
+    print("login page")
+@pytest.mark.sanity
+def test_compose():
+    print("compose page")
+@pytest.mark.smoke
+def test_tras():
+    print("tash module")
+@pytest.mark.sanity
+def test_bin():
+    print("bin module")
+@pytest.mark.smoke
+def test_inbox():
+    print("inbox module")
+"""
+"""
+>pytest -vs -m sanity pyconcept.py
+collected 5 items / 3 deselected / 2 selected
+
+pyconcept.py::test_compose compose page
+PASSED
+pyconcept.py::test_bin bin module
+PASSED
+"""
+
+"""
+@pytest.mark.regression
+@pytest.mark.smoke
+def test_login():
+    print("login page")
+@pytest.mark.sanity
+def test_compose():
+    print("compose page")
+@pytest.mark.regression
+@pytest.mark.smoke
+def test_trash():
+    print("tash module")
+@pytest.mark.sanity
+def test_bin():
+    print("bin module")
+@pytest.mark.smoke
+def test_inbox():
+    print("inbox module")
+"""
+"""
+>pytest -vs -m "smoke and regression" pyconcept.py
+collected 5 items / 3 deselected / 2 selected
+
+pyconcept.py::test_login login page
+PASSED
+pyconcept.py::test_trash tash module
+PASSED
+"""
+
+"""
+@pytest.mark.regression
+@pytest.mark.smoke
+def test_login():
+    print("login page")
+@pytest.mark.sanity
+def test_compose():
+    print("compose page")
+@pytest.mark.regression
+@pytest.mark.sanity
+def test_trash():
+    print("tash module")
+@pytest.mark.sanity
+def test_bin():
+    print("bin module")
+@pytest.mark.smoke
+def test_inbox():
+    print("inbox module")
+"""
+"""
+>pytest -vs -m "smoke or regression" pyconcept.py
+collected 5 items / 2 deselected / 3 selected
+
+pyconcept.py::test_login login page
+PASSED
+pyconcept.py::test_trash tash module
+PASSED
+pyconcept.py::test_inbox inbox module
+PASSED
+"""
+
+"""
+@pytest.mark.regression
+@pytest.mark.smoke
+def test_login():
+    print("login page")
+@pytest.mark.sanity
+def test_compose():
+    print("compose page")
+@pytest.mark.regression
+@pytest.mark.sanity
+def test_trash():
+    print("tash module")
+@pytest.mark.sanity
+def test_bin():
+    print("bin module")
+@pytest.mark.smoke
+def test_inbox():
+    print("inbox module")
+"""
+"""
+>pytest -vs -m "not regression" pyconcept.py
+collected 5 items / 2 deselected / 3 selected
+
+pyconcept.py::test_compose compose page
+PASSED
+pyconcept.py::test_bin bin module
+PASSED
+pyconcept.py::test_inbox inbox module
+PASSED
+"""
+##########################################################################################################################
+#method level
+"""
+class Test_FB:
+    @pytest.mark.critical
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.major
+    def test_like(self):
+        print("like feature")
+    @pytest.mark.critical
+    def test_comment(self):
+        print("comment feature")
+"""
+"""
+>pytest -vs -m "critical" pyconcept.py
+collected 3 items / 1 deselected / 2 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_comment comment feature
+PASSED
+"""
+
+"""
+class Test_FB:
+    @pytest.mark.critical
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.major
+    def test_like(self):
+        print("like feature")
+    @pytest.mark.critical
+    def test_comment(self):
+        print("comment feature")
+"""
+"""
+>pytest -vs -m "not major" pyconcept.py
+collected 3 items / 1 deselected / 2 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_comment comment feature
+PASSED
+"""
+
+"""
+class Test_FB:
+    @pytest.mark.critical
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.major
+    def test_like(self):
+        print("like feature")
+    @pytest.mark.critical
+    def test_comment(self):
+        print("comment feature")
+
+class Test_Insta:
+    @pytest.mark.important
+    @pytest.mark.critical
+    def test_reels(self):
+        print("reels module")
+    @pytest.mark.minior
+    def test_post(self):
+        print("post module")
+    @pytest.mark.major
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "critical" pyconcept.py
+collected 6 items / 3 deselected / 3 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_comment comment feature
+PASSED
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+"""
+
+"""
+class Test_FB:
+    @pytest.mark.critical
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.major
+    def test_like(self):
+        print("like feature")
+    @pytest.mark.critical
+    def test_comment(self):
+        print("comment feature")
+
+class Test_Insta:
+    @pytest.mark.important
+    @pytest.mark.critical
+    def test_reels(self):
+        print("reels module")
+    @pytest.mark.minior
+    def test_post(self):
+        print("post module")
+    @pytest.mark.major
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "critical and important" pyconcept.py
+collected 6 items / 5 deselected / 1 selected
+
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+"""
+
+#multiple class method level
+"""
+class Test_FB:
+    @pytest.mark.critical
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.major
+    def test_like(self):
+        print("like feature")
+    @pytest.mark.critical
+    def test_comment(self):
+        print("comment feature")
+
+class Test_Insta:
+    @pytest.mark.important
+    @pytest.mark.critical
+    def test_reels(self):
+        print("reels module")
+    @pytest.mark.minior
+    def test_post(self):
+        print("post module")
+    @pytest.mark.major
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "critical or important" pyconcept.py
+collected 6 items / 3 deselected / 3 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_comment comment feature
+PASSED
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+"""
+###########################################################################################################
+#class level
+"""
+@pytest.mark.level1
+class Test_FB:
+    def test_reqst(self):
+        print("request module")
+    def test_like(self):
+        print("like feature")
+class Test_Twitter:
+    def test_comment(self):
+        print("comment feature")
+@pytest.mark.level1
+class Test_Insta:
+    def test_reels(self):
+        print("reels module")
+    def test_post(self):
+        print("post module")
+class Test_Gmail:
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "level1" pyconcept.py
+collected 6 items / 2 deselected / 4 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_like like feature
+PASSED
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+pyconcept.py::Test_Insta::test_post post module
+PASSED
+"""
+
+"""
+@pytest.mark.level1
+class Test_FB:
+    def test_reqst(self):
+        print("request module")
+    def test_like(self):
+        print("like feature")
+class Test_Twitter:
+    def test_comment(self):
+        print("comment feature")
+@pytest.mark.level2
+class Test_Insta:
+    def test_reels(self):
+        print("reels module")
+    def test_post(self):
+        print("post module")
+class Test_Gmail:
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "not level2" pyconcept.py
+collected 6 items / 2 deselected / 4 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_FB::test_like like feature
+PASSED
+pyconcept.py::Test_Twitter::test_comment comment feature
+PASSED
+pyconcept.py::Test_Gmail::test_story story module
+PASSED
+"""
+
+#class and method level
+"""
+@pytest.mark.level1
+class Test_FB:
+    @pytest.mark.f1
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.f2
+    def test_like(self):
+        print("like feature")
+class Test_Twitter:
+    def test_comment(self):
+        print("comment feature")
+@pytest.mark.level1
+class Test_Insta:
+    @pytest.mark.f1
+    def test_reels(self):
+        print("reels module")
+    def test_post(self):
+        print("post module")
+class Test_Gmail:
+    @pytest.mark.f1
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "level1 and f1" pyconcept.py
+collected 6 items / 4 deselected / 2 selected
+
+pyconcept.py::Test_FB::test_reqst request module
+PASSED
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+"""
+
+"""
+@pytest.mark.level1
+class Test_FB:
+    @pytest.mark.f1
+    def test_reqst(self):
+        print("request module")
+    @pytest.mark.f2
+    def test_like(self):
+        print("like feature")
+@pytest.mark.level2
+class Test_Insta:
+    @pytest.mark.f1
+    def test_reels(self):
+        print("reels module")
+    def test_post(self):
+        print("post module")
+class Test_Gmail:
+    @pytest.mark.f1
+    def test_story(self):
+        print("story module")
+"""
+"""
+>pytest -vs -m "not level1 and f1" pyconcept.py
+collected 5 items / 3 deselected / 2 selected
+
+pyconcept.py::Test_Insta::test_reels reels module
+PASSED
+pyconcept.py::Test_Gmail::test_story story module
+PASSED
+"""
+#######################################################################################################################
+#module level
+"""
+pytestmark = pytest.mark.basic
+
+def test_fun1():
+    print("function level")
+
+class Test_cls:
+    def test_m1(self):
+        print("method1 level")
+    def test_m2(self):
+        print("method2 level")
+"""
+"""
+>pytest -vs -m basic pyconcept.py
+collected 3 items
+
+pyconcept.py::test_fun1 function level
+PASSED
+pyconcept.py::Test_cls::test_m1 method1 level
+PASSED
+pyconcept.py::Test_cls::test_m2 method2 level
+PASSED
+"""
+#######################################################################################################################
+#batch execution level(batch_execution_marker)
+#######################################################################################################################
+#14-09-2023
+
+"""
+built-in markers:
+----------------
+1.skip
+2.skipif
+3.xfail
+4.parameterize
+5.usefixture
+"""
+"""
+Skipping test functions
+1. Skip
+ The simplest way to skip a test function is to mark it with the skip decorator which may 
+be passed an optional reason:
+   @pytest.mark.skip(reason=””) : skips the testcases always without any reason
+2. Skipif
+  If you wish to skip something conditionally then you can use skipif instead.
+  @pytest.mark.skipif(condition, reason): skips the testcases only when the condition is  True.
+"""
+#function level
+"""
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skip
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 SKIPPED (unconditional skip)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skip(reason="not important testcase")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 SKIPPED (not important testcase)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+def test_tc1():
+    print("testcase1")
+@pytest.mark.smoke
+@pytest.mark.skip(reason="not important")
+def test_tc2():
+    print("testcase2")
+@pytest.mark.smoke
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs -m smoke pyconcept.py
+collected 3 items / 1 deselected / 2 selected
+
+pyconcept.py::test_tc2 SKIPPED (not important)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+@pytest.mark.smoke
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skip(reason="not important")
+def test_tc2():
+    print("testcase2")
+@pytest.mark.smoke
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs -m smoke pyconcept.py
+collected 3 items / 1 deselected / 2 selected
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+@pytest.mark.smoke
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skip(reason="not important")
+def test_tc2():
+    print("testcase2")
+@pytest.mark.smoke
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 SKIPPED (not important)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+########################################################################################################################
+#method level
+"""
+class Test_Smoke:
+    def test_m1(self):
+        print("method1")
+    @pytest.mark.skip(reason="not a opart of suite")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::Test_Smoke::test_m1 method1
+PASSED
+pyconcept.py::Test_Smoke::test_m2 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Smoke::test_m3 method3
+PASSED
+"""
+"""
+class Test_Smoke:
+    @pytest.mark.c1
+    def test_m1(self):
+        print("method1")
+    @pytest.mark.skip(reason="not a opart of suite")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+"""
+"""
+collected 3 items / 2 deselected / 1 selected
+
+pyconcept.py::Test_Smoke::test_m1 method1
+PASSED
+"""
+
+"""
+class Test_Smoke:
+    @pytest.mark.c1
+    def test_m1(self):
+        print("method1")
+    @pytest.mark.c1
+    @pytest.mark.skip(reason="not a opart of suite")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+"""
+"""
+>pytest -vs -m "c1" pyconcept.py
+collected 3 items / 1 deselected / 2 selected
+
+pyconcept.py::Test_Smoke::test_m1 method1
+PASSED
+pyconcept.py::Test_Smoke::test_m2 SKIPPED (not a opart of suite)
+"""
+
+#class level
+"""
+@pytest.mark.skip(reason="not a opart of suite")
+class Test_Smoke:
+    def test_m1(self):
+        print("method1")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+
+class Test_Sanity:
+    def test_m4(self):
+        print("method1")
+    def test_m5(self):
+        print("method2")
+    def test_m6(self):
+        print("method3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 6 items
+
+pyconcept.py::Test_Smoke::test_m1 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Smoke::test_m2 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Smoke::test_m3 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Sanity::test_m4 method1
+PASSED
+pyconcept.py::Test_Sanity::test_m5 method2
+PASSED
+pyconcept.py::Test_Sanity::test_m6 method3
+PASSED
+"""
+
+"""
+@pytest.mark.skip(reason="not a opart of suite")
+class Test_Smoke:
+    def test_m1(self):
+        print("method1")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+
+class Test_Sanity:
+    def test_m4(self):
+        print("method1")
+    @pytest.mark.skip(reason="not a opart of suite")
+    def test_m5(self):
+        print("method2")
+    def test_m6(self):
+        print("method3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 6 items
+
+pyconcept.py::Test_Smoke::test_m1 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Smoke::test_m2 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Smoke::test_m3 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Sanity::test_m4 method1
+PASSED
+pyconcept.py::Test_Sanity::test_m5 SKIPPED (not a opart of suite)
+pyconcept.py::Test_Sanity::test_m6 method3
+PASSED
+"""
+#####################################################################################################################
+#module level
+"""
+pytestmark = pytest.mark.skip(reason="dont want module")
+
+def test_f1():
+    print("function1")
+
+class Test_Smoke:
+    def test_m1(self):
+        print("method1")
+    def test_m2(self):
+        print("method2")
+    def test_m3(self):
+        print("method3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 4 items
+
+pyconcept.py::test_f1 SKIPPED (dont want module)
+pyconcept.py::Test_Smoke::test_m1 SKIPPED (dont want module)
+pyconcept.py::Test_Smoke::test_m2 SKIPPED (dont want module)
+pyconcept.py::Test_Smoke::test_m3 SKIPPED (dont want module)
+"""
+######################################################################################################################
+#function level with skipif
+"""
+tid = 234
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skipif(tid>345, reason="this testcase not included as part of automation")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 testcase2
+PASSED
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+tid = 456
+def test_tc1():
+    print("testcase1")
+@pytest.mark.skipif(tid>345, reason="this testcase not included as part of automation")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 SKIPPED (this testcase not included as part of automation)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+tid = 55
+def test_tc1():
+    print("testcase1")
+@pytest.mark.regression
+@pytest.mark.skipif(tid>345, reason="this testcase not included as part of automation")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs -m "regression" pyconcept.py
+collected 3 items / 2 deselected / 1 selected
+
+pyconcept.py::test_tc2 testcase2
+PASSED
+"""
+
+"""
+tid = 555
+def test_tc1():
+    print("testcase1")
+@pytest.mark.regression
+@pytest.mark.skipif(tid>345, reason="this testcase not included as part of automation")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs -m "regression" pyconcept.py
+pyconcept.py::test_tc2 SKIPPED (this testcase not included as part of automation)
+"""
+
+#method level with skipif
+"""
+brw = "mozilla"
+class Test_Facebook:
+    def test_login(self):
+        print("login pag")
+    @pytest.mark.skipif(brw=="chrome", reason="not suporting")
+    def test_signup(self):
+        print("signup page")
+    def test_request(self):
+        print("request")
+"""
+"""
+collected 3 items
+
+pyconcept.py::Test_Facebook::test_login login pag
+PASSED
+pyconcept.py::Test_Facebook::test_signup signup page
+PASSED
+pyconcept.py::Test_Facebook::test_request request
+PASSED
+"""
+
+"""
+brw = "chrome"
+class Test_Facebook:
+    def test_login(self):
+        print("login pag")
+    @pytest.mark.skipif(brw=="chrome", reason="not suporting")
+    def test_signup(self):
+        print("signup page")
+    def test_request(self):
+        print("request")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::Test_Facebook::test_login login pag
+PASSED
+pyconcept.py::Test_Facebook::test_signup SKIPPED (not suporting)
+pyconcept.py::Test_Facebook::test_request request
+PASSED
+"""
+
+#class level with skipif
+"""
+brw = "ie"
+@pytest.mark.skipif(brw in ["safari", "opera", "ie"], reason="not suporting")
+class Test_Facebook:
+    def test_login(self):
+        print("login pag")
+    def test_signup(self):
+        print("signup page")
+class Test_Insta:
+    def test_request(self):
+        print("request")
+"""
+""""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::Test_Facebook::test_login SKIPPED (not suporting)
+pyconcept.py::Test_Facebook::test_signup SKIPPED (not suporting)
+pyconcept.py::Test_Insta::test_request request
+PASSED
+"""
+#######################################################################################################################
+"""
+XFail
+=====
+ mark test functions as expected to fail
+ You can use the xfail marker to indicate that you expect a test to fail:
+Syntax: @pytest.mark.xfail([parameters])
+
+1. condition parameter : If a test is only expected to fail under a certain condition, you can pass 
+that condition as the first parameter:
+Eg:
+@pytest.mark.xfail(sys.platform == "win32", reason="bug in a 3rd party library")
+def test_function():
+    . . .
+
+2. reason parameter: You can specify the motive of an expected failure with 
+the reason parameter
+Eg:
+@pytest.mark.xfail(reason="known parser issue")
+def test_function():
+    . . .
+
+3. raises parameter: If you want to be more specific as to why the test is failing, you can specify 
+a single exception, or a tuple of exceptions, in the raises argument.
+Eg: 
+@pytest.mark.xfail(raises=RuntimeError)
+def test_function():
+    . . .
+note:
+*****
+*this marker will go when intenstaionally we want to fail the testcase because a feature is not stable/
+new feature/not implemented/open defect/reqt changes etc.. 
+*it will not print "fail" in result it will print as "xpass".
+"""
+#functional level
+"""
+def test_tc1():
+    print("testcase1")
+@pytest.mark.xfail
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 testcase2
+XPASS
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+def test_tc1():
+    print("testcase1")
+@pytest.mark.xfail(reason="new feature")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 testcase2
+XPASS (new feature)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+"""
+
+id=20
+def test_tc1():
+    print("testcase1")
+@pytest.mark.xfail(id==20, reason="new feature")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 testcase2
+XPASS (new feature)
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+
+"""
+id=20
+def test_tc1():
+    print("testcase1")
+@pytest.mark.xfail(id==30, reason="new feature")
+def test_tc2():
+    print("testcase2")
+def test_tc3():
+    print("testcase3")
+"""
+"""
+>pytest -vs pyconcept.py
+collected 3 items
+
+pyconcept.py::test_tc1 testcase1
+PASSED
+pyconcept.py::test_tc2 testcase2
+PASSED
+pyconcept.py::test_tc3 testcase3
+PASSED
+"""
+"""
+note:
+*****
+*in xfail marker if cond the is True then the result is "xpass" else if the cond is False the result
+is "PASSED".
+"""
+########################################################################################################################
+#19-09-2023
+"""
+parameterize:
+-------------
+@pytest.mark.parametrize: The builtin pytest.mark.parametrize decorator enables parametrization 
+of arguments for a test function.
+Here is a typical example of a test function that implements checking that a certain input leads to an 
+expected output
+note:
+-----
+*in "parametrize" the number of names must be equal to the number of values.
+
+syntax:-
+========
+@pytest.mark.parametrize("value1, value2", [[val1, val2], [val3, val4],....])
+def func(value1, value2):
+     . . .
+
+note:
+-----
+*no. of variable should be equal to no. of values.
+*no. of test function call equal to no. of inputs/values.
+*when ever we are declaring multiple variables then multiple variables should be enclosed within
+any brackets like tuple, list, set.
+"""
+
+def add(a, b):
+    print(a+b)
+# add(2, 4)
+#according to above function add is a normal function, it will accept parameters when we call a function.
+#but if it is test function we can't pass a argument bcz test function are not explicitly callable.
+#for any test function/method if we pass any argument then it will consider as a fixture.
+
+# def test_simple(a, b):
+#     ...
+# test_simple(10, 20)
+
+# collected 1 item
+# pytestconcept.py::test_simple ERROR
+# fixture 'a' not found
+
+#to over come above drawback we use "parameterize" as builtin marker.
+
+"""
+@pytest.mark.parametrize(a, [10])
+def test_param(a):
+    print(a)
+# ERROR pyconcept.py - NameError: name 'a' is not defined
+"""
+
+"""
+@pytest.mark.parametrize("a", 10)
+def test_param(a):
+    print(a)
+# ERROR pyconcept.py - TypeError: 'int' object is not iterable
+"""
+
+#function level
+"""
+@pytest.mark.parametrize(["a", "b"], [[10, 20], (3, 5), {7, 9}, {"a":11, "b":22}])
+def test_param(a, b):
+    print(a, b)
+"""
+"""
+>pytest -vs pyconcept.py
+collected 4 items
+
+pyconcept.py::test_param[10-20] 10 20
+PASSED
+pyconcept.py::test_param[3-5] 3 5
+PASSED
+pyconcept.py::test_param[9-7] 9 7
+PASSED
+pyconcept.py::test_param[a-b] a b
+PASSED
+"""
+
+"""
+@pytest.mark.parametrize(["a", "b", "c"], [[10, 20, 30]])
+def test_param(a, b, c):
+    print(a+b+c)
+"""
+"""
+>pytest -vs pyconcept.py
+collected 1 item
+
+pyconcept.py::test_param[10-20-30] 60
+PASSED
+"""
+
+"""
+@pytest.mark.parametrize(["a", "b", "c"], [[10, 20]])
+def test_param(a, b, c):
+    print(a+b+c)
+"""
+"""
+pyconcept.py::test_param: in "parametrize" the number of names (3):
+  ['a', 'b', 'c']
+must be equal to the number of values (2):
+  [10, 20]
+"""
+
+#method level
+"""
+class Test_Demo:
+    @pytest.mark.parametrize(["a", "b"], [["hey", "bye"], ["class", "over"]])
+    def test_tc1(self, a, b):
+        print(a, b)
+"""
+"""
+>pytest -vs pyconcept.py
+collected 2 items
+
+pyconcept.py::Test_Demo::test_tc1[hey-bye] hey bye
+PASSED
+pyconcept.py::Test_Demo::test_tc1[class-over] class over
+PASSED
+"""
+####################################################################################################################
+from selenium.webdriver import Chrome
+from time import sleep
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime
+
+def screenshot(driver):
+    date = datetime.now()
+    d = date.strftime("%d-%m-%y %H-%M-%S")
+    driver.save_screenshot(f"../screen_shot/{d}.png")
+
+@pytest.mark.parametrize(["data", "title"], [["car", "Carss in India, Free classifieds in India | OLX"],
+                                             ["bikes", "Bikes in India, Free classifieds in India | OLX"],
+                                             ["watch", "Watch in India, Free classifieds in India | OLX"]])
+def test_search_items(data, title):
+    driver = Chrome()
+    driver.get("https://www.olx.in/")
+    driver.maximize_window()
+    driver.find_element("xpath", "//input[@data-aut-id='searchBox']").send_keys(data)
+    driver.find_element("xpath", "//div[@data-aut-id='btnSearch']").click()
+    try:
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.title_is(title))
+    except:
+        screenshot(driver)
+        raise Exception
+    sleep(5)
+    driver.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
