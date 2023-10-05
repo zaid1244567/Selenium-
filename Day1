@@ -1,0 +1,175 @@
+who can attend selenium class?
+***************************
+only those who are taken full stack testing /testing course (python)
+freshers -> selenium
+experience -> advance selenium
+(year gap / working manual)
+
+file handling ongoing oops should start by 2-3 days
+just python started --> dont attend
+for loop not completed --> dont attend
+manual testing class should be started
+
+timings --> 7am to 9am(mon-sat) 7.10am --> my voice will audiable from
+duration -> 1mon 10day - 15day
+
+councilor
+========
+Ramya -> 8147355042
+Ashritha-> 8951965854
+=========================================================================================================
+list  and dictionary data type
+if-else, for loop, in operator
+comprahension(list and dictionary)
+functions
+oops
+(class and object)
+
+in --> membership operator
+LHS in RHS
+single -> lhs -> any data type(indivual / collection)
+multiple -> rhs -> only collection data type(string/list/tuple/set/dict)
+lhs should be present in rhs -> True else it will False
+
+for LHS in RHS:
+   ...
+for ref_var in collection_dt:
+    ...
+ 
+
+range()--> sequential integer number
+1 2 3 4 5
+3 4 5 6 7 8 9
+range(strt_number, end_number, step_value)
+range(1, 6) [1, 2, 3, 4, 5]
+
+print square of 1 to 5 numbers.
+
+for i in range(1, 6):
+      print(i**2)
+
+[ value/expression/output  for LHS in RHS ]
+l = [i**2 for i in range(1, 6)]
+print(l)
+
+names = ['apple', 'kiwi', 'orange', 'mango', 'berry']
+
+for name in names:		#name=apple
+     if len(name)%2==0:
+           print(name)
+
+l = [name for name in names if len(name)%2==0]
+
+for name in names:  
+     if len(name)%2==0:    
+           print(name[::-1])
+     else:
+           print(name.upper())
+
+
+[name[::-1] if len(name)%2 == 0 else name.uppeer() for name in names]
+==============================================================================================================
+#03-08-2023
+automation:
+------------------
+*is a set of instruction/steps/procedure need to be done automatically is called as automation.
+*"instruction" is nothing but manual testcase.
+selenium:
+--------------
+*selenium a tool/software/application to do automation.
+*selenium is tool to be used for converting manual testcase into automatically.
+python:
+-----------
+*python is a programming lang which is used to do auomation.
+(bcz instuction will be in HLL need to convert into LLL)
+
+types of application/software
+------------------------------------------
+1.standalone/standalone application:
+********************************
+*any application which we are accessing without opening browser, entering URL, internet and server connection 
+those applicatio are called as standalone application.
+example:
+-------------
+paint, notepad, ms-office, calculator, falshlight, camera, etc..
+tool:QTP, jubula etc.
+
+2.client server/mobile application:
+******************************
+*here there will be 2 s/w client and serevr s/w, client s/w will interact with server s/w and get the information.
+example:
+-------------
+whats app, instagram, facebook, twitter, qtalk, ola, etc..
+tool: appium, selendorid, robotium, etc...
+
+3.web application:
+****************
+*any application which we can access by opening browser, entering URL, internet and serevr connection are called
+as web-application.
+example:
+-------------
+www.fb.com, www.sbi.com, www.gmail.com, www.qspiders.com etc...
+tool: selenium, QTP, Oracle test suite etc..
+
+selenium:
+-------------
+*selenium is a free and open source automation tool.
+*selenium is a web-based automation tool.
+*selenium will support multiple browsers, programing lang, different OS.
+
+drawbacks:
+----------------
+*it can automate only on web-application.
+*we can't automate audio, videos, images, animations, otp, captcha, sub-title, etc.
+
+history:
+----------
+*it wasintroduced by "Json Huggins" in a year 2004 in a "Thought works" company.
+*in a year 2008 "Google" accquired a "selenium" from thought works and the current owner is "Google".
+#########################################################################################################
+#04-08-023
+cgeck flavours of selenium file
+
+===========================================================================================================
+#07-08-2023
+installation:
+==========
+1.install all pycharm
+https://www.jetbrains.com/pycharm/download/?section=windows
+downalod community edition pycharm
+after downloading--> double click on downloaded file--> click on next --> click on next -->
+
+2.create a project in pycharm
+open pycharm --> click on file --> new project --> give name for project --> click on creatae .
+
+3.install selenium
+click on file --> click on settings --> click on project --> click on python interpreter --> click on plus--> search for selenium
+--> click on specify version check box --> select 4.9.0 --> click on install package --> installed successfull message should display.
+
+click on file --> click on settings --> click on project --> click on python interpreter --> click on plus--> search for selenium
+--> click on specify version check box --> select 3.141.0 --> click on install package --> installed successfull message should display
+--> close the pycharm --> again open pycharm
+
+right click on project --> click on new --> click on directory --> give name of as "drivers" and click on enter button
+right click on project --> click on new --> click on python package --> give name of as "programs" and click on enter button
+
+install driver executable file
+=======================
+chrome browser --> "chromedriver.exe"  file name
+
+open selenium official website(https://www.selenium.dev/downloads/)
+--> scroll down till find 'browser" click on browser --> click on documentation link on chrome browser
+-->click on "downloads" in (The older releases can be found at the Downloads page.)--> based on ur chrome version
+--> click on version link --> click on win_32.zip 
+
+firefox/mozilla browser --> "geckodriver.exe"  file name
+
+open selenium official website(https://www.selenium.dev/downloads/)
+--> scroll down till find 'browser" click on browser --> click on documentation link on mozilla browser
+-->click on  "geckodriver releases" --> click on "releases" on top left corner  --> click on win_64.zip 
+
+edge browser --> "edgedrive.exe"  file name
+
+open selenium official website(https://www.selenium.dev/downloads/)
+--> scroll down till find 'browser" click on browser --> click on documentation link on edge browser
+click on the version click based on ur edge version --> click on "x64".
