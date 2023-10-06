@@ -1,0 +1,17 @@
+<html>
+<head>
+<title> SELENIUM DEMO WEBPAGE</title>
+</head>
+<body bgcolor="pink">
+UserName:<input type="text" id="a1"><br/>
+Password:<input type="password" id="a2"><br/>
+Male:<input type="radio" id="a3">Female:<input type="radio" id="a4"><br/>
+<input type="checkbox" id="a6">I accept T&C*<br/>
+<a href="https://www.fb.com" id="l1">Facebook   </a>
+<a href="https://www.gmail.com" id="l1">Gamil</a><br/>
+feedback:<textarea id="a1"> </textarea><br/>
+<input type="submit" value="OK">
+<input type="submit" value="CANCEL">
+<img src="E:\build\sample.png" id="a5">
+</body>
+</html>
