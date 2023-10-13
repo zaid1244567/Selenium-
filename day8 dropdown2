@@ -1,0 +1,375 @@
+"""
+handling drop-down(DD):
+"""
+"""
+*a DD a is collection/list of options.
+*DD are classifed into 2 types,
+1.standard DD
+2.Non-Standard DD
+
+1.standard DD:
+**************
+*any DD developed by "select tag" is called as standard DD.
+*standard DD is classified into 2 types,
+1.single select drop down(SSDD)
+2.multi select drop down(MSDD)
+*to automate DD we use "Select" class.
+*select class constructor will accept one argument that is address if drop-down in web-page.
+class Select:
+    def __init__(self, webelement):
+        ...    
+
+s = Select(dropdown_ele)
+
+1.single select drop down(SSDD):
+********************************
+*in SSDD we can select only one option and we can't select multiple option and we can't de-select the option.
+
+2.multi select drop down(MSDD)
+********************************
+*in MSDD we can select we can select multiple option and we can de-select the option.
+
+*to select an options we have 3 methods,
+1.select_by_index()
+    *index starts from 0
+2.select_by_value()
+    *in html code it should consisting of "value" as an attribute and we need to pass attribute value.
+    (if we pass other attribute value it will not work)
+3.select_by_visible_text()
+    *we need to pass option text value and it is a case-senscetive.
+
+*to de-select an option we have 4 methods,
+1.deselect_by_index()
+2.deselect_by_value()
+3.deselect_by_visible_text()
+4.deselect_all()
+    *it will deselect all the options.
+"""
+
+from selenium.webdriver import Chrome
+from selenium.webdriver.support.select import Select
+from time import sleep
+
+#single select drop down
+#ws to select an option in SSDD by index method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+s.select_by_index(2)
+s.select_by_index(0)
+"""
+
+#ws to select an option in SSDD by value method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+s.select_by_value("v5")
+"""
+
+#ws to select an option in SSDD by visible_text method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+s.select_by_visible_text("Python")
+"""
+
+#ws to select an option in SSDD by visible text method but text not matches
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+s.select_by_visible_text("Python123")
+#NoSuchElementException: Message: Could not locate element with visible text: Python123
+"""
+
+#multi select drop down
+#ws to select multiple option in MSDD by index method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_index(0)
+s.select_by_index(2)
+s.select_by_index(4)
+"""
+
+#ws to select multiple option in MSDD by value method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_value("v22")
+s.select_by_value("v44")
+"""
+
+#ws to select multiple option in MSDD by visible_text method
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_visible_text("7-9PM")
+s.select_by_visible_text("7-9AM")
+"""
+
+#ws to select and deselect option in MSDD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_index(2)
+s.select_by_value("v11")
+s.select_by_visible_text("7-9PM")
+sleep(2)
+s.deselect_by_index(0)
+s.deselect_by_value("v33")
+s.deselect_by_visible_text("7-9PM")
+"""
+
+#ws to select and deselect all option in MSDD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_index(2)
+s.select_by_value("v11")
+s.select_by_visible_text("7-9PM")
+s.deselect_all()
+"""
+
+#ws to select and deselect option in SSDD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+s.select_by_index(2)
+s.deselect_by_index(2)
+#NotImplementedError: You may only deselect options of a multi-select
+"""
+
+#ws to select "Oct" option in facebook month dropdown
+"""
+driver = Chrome()
+driver.get("https://www.facebook.com/")
+driver.find_element("xpath", "//a[.='Create new account']").click()
+sleep(2)
+month = driver.find_element("xpath", "//select[@title='Month']")
+s = Select(month)
+s.select_by_value("10")
+"""
+"""
+assignment:
+-----------
+ws to select ur dob.
+ws to select option in hint question and passport office from passport seva
+(https://portal2.passportindia.gov.in/AppOnlineProject/user/RegistrationBaseAction?request_locale=en)
+"""
+######################################################################################################################################
+#29-08-2023
+
+"""
+is_multiple:
+    *it will True if a drop down is multi select DD else it will return None.
+"""
+#ws to verify a DD is multi select or not
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+msdd = driver.find_element("id", "a2")
+s1 = Select(ssdd)           #single selectDD
+print(s1.is_multiple)   #None
+s2 = Select(msdd)           #multi selectDD
+print(s2.is_multiple)   #True
+"""
+
+"""
+*options:
+    *Returns a list of all options belonging to this select tag/inspected DD.
+    *this will work for both SSDD and MSDD.   
+"""
+#ws to select all the options from a DD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+ops = s.options
+print(ops)      #[<selenium.webdriver.remote.webelement.WebElement (session="96bfe0ae41594d21c2f3cf417dd56eb9", element="EB5243B0D3BE44F5531120EB7509ECE1_element_4")>, ... ]
+"""
+
+#ws to select all the options from a DD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+ssdd = driver.find_element("id", "a1")
+s = Select(ssdd)
+ops = s.options
+for op in ops:
+    print(op.text)
+"""
+"""
+Manual
+SQL
+Selenium
+Python
+Api
+"""
+
+#ws to print all options in ascending order
+"""
+l = []
+driver = Chrome()
+driver.get("https://www.facebook.com/")
+driver.find_element("xpath", "//a[.='Create new account']").click()
+sleep(2)
+month = driver.find_element("xpath", "//select[@title='Month']")
+s = Select(month)
+ops = s.options
+for op in ops:
+    l.append(op.text)
+l.sort()
+print(l)        #['Apr', 'Aug', 'Dec', 'Feb', 'Jan', 'Jul', 'Jun', 'Mar', 'May', 'Nov', 'Oct', 'Sep']
+"""
+
+"""
+*all_selected_options:
+    *Returns a list of all selected options belonging to this select tag/inspected DD.
+    *it will work both SSDD and MSDD.
+    *output will be in web_element address format to get correct output we use ".text" property.
+"""
+#ws to print all selected options from a DD
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_index(2)
+s.select_by_index(0)
+s.select_by_index(4)
+ops = s.all_selected_options
+for op in ops:
+    print(op.text)
+"""
+"""
+7-9AM
+12-2PM
+4-6PM
+"""
+
+"""
+*first_selected_option:
+    *it will return top most/1st option among all the selected option.
+"""
+#example on first selected option property
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+msdd = driver.find_element("id", "a2")
+s = Select(msdd)
+s.select_by_index(2)        #12pm
+s.select_by_index(0)        #7am
+s.select_by_index(4)        #4pm
+print(s.first_selected_option.text)     #7am
+"""
+
+"""
+assignment question:
+--------------------
+wp to create a dictionary month number and month name pair from FB
+{1:'Jan', 2:'Feb', ... 12:'Dec'}
+wp to create a list comprahension of all even number from a days DD in FB
+[2, 4, 6, ... 30]
+wp to create a dictionary alphabet and state name pair from passport seva
+https://portal2.passportindia.gov.in/AppOnlineProject/user/RegistrationBaseAction?request_locale=en
+'A':{'Ahmedaba','Amrithsar'}, 'B':{'Bangalore'},.....
+wp to create a dictionary option index as key and option should be a list of words from customer type DD
+https://www.indiapost.gov.in/VAS/Pages/CustomerLinking.aspx
+{1:['Bill','an', 'COD', 'customer'], 2:[..], .. }
+"""
+###########################################################################################################################
+"""
+find_elements():
+----------------
+*when we want find_multiple elements in a web-page then we go find_elements() methods.
+*return type of find_elements() is list of web-elements.
+
+syntax:
+-------
+find_elements(locator-name, locator-value)
+"""
+
+#ws to send hai for all text field
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+unames = driver.find_elements("xpath", "//input[@type='text']")
+print(unames)
+#<selenium.webdriver.remote.webelement.WebElement (session="b0f2b6af4b808e07f733262bc9854658", element="8B61A19EF226DA6145BB59AA8851B9A8_element_2")>, ... ]
+"""
+
+#ws to send hai for all text field
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Desktop/demo.html")
+unames = driver.find_elements("xpath", "//input[@type='text']")
+for un in unames:
+    un.send_keys("hai")
+"""
+
+#ws to print text all major tabs in amazon
+"""
+driver = Chrome()
+driver.get("https://www.amazon.in/")
+driver.maximize_window()
+tabs = driver.find_elements("xpath", "//a[@class='nav-a  ']")
+for tab in tabs:
+    print(tab.text)
+"""
+"""
+Amazon miniTV
+Sell
+Best Sellers
+Today's Deals
+Mobiles
+New Releases
+Customer Service
+Prime
+Electronics
+"""
+
+#ws to print text in echo section
+"""
+driver = Chrome()
+driver.get("https://www.amazon.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//span[.='All'])[2]").click()
+sleep(2)
+driver.find_element("xpath", "//div[.='Echo & Alexa']").click()
+sleep(2)
+ops = driver.find_elements("xpath", "//div[.='echo & alexa']/../following-sibling::li/a")
+for op in ops[:8]:
+    print(op.text)
+"""
+"""
+All-new Echo Dot (4th Gen)
+Echo Dot (3rd Gen)
+Echo Show 8
+All-new Echo (4th Gen)
+Echo Show 5
+Echo Studio
+All-new Echo Show 10
+See all devices with Alexa
+"""
