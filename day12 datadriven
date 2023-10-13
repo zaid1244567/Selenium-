@@ -1,0 +1,24 @@
+"""
+data driven testing:
+********************
+"""
+"""
+*testing the s/w(or)application with different set of input is called as data driven testing.
+*we will store different set of input in "excel".
+*excel is a standalone application, but selenium will automate on web-application we can't directly interact with excel,
+to automate excel we use 3rd party application that is "xlrd".
+
+steps to install xlrd:
+**********************
+click on file --> click on settings --> click on project --> click on python interpreter --> click on plus(+) icon
+--> search for xlrd --> click on specify version, select 1.2.0 version --> click on install package -->
+package install successfully message should be display.
+
+how to add excel file:
+**********************
+*create a folder named as "excel" in pycharm.
+*go to project location/path --> open excel folder --> right click on screen --> click on new
+--> click on microsoft excel worksheet --> give a name --> click on enter
+*open pycharm --> created file should display under excel folder.
+ 
+"""
