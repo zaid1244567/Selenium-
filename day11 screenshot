@@ -1,0 +1,54 @@
+"""
+handling screenshot:
+====================
+"""
+"""
+*while testing an application if expected result is not matches with actual result then testcase will be
+fail and it will be defect.
+*to log a defect in report we required screenshot, then we take screenshot.
+*always screenshot file name should be save with .png extenstion.
+*to take a screenshot we go below method,
+    driver.save_screenshot(file_name)
+*by default screenshot will save in current location/directory, if we want to save in particular location/folder
+then specify the path.
+"""
+
+from selenium.webdriver import  Chrome
+from time import sleep
+from datetime import datetime
+
+#example on saving screenshot in current location
+"""
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot("defect1.png")
+"""
+
+#example on saving screenshot in specified location
+"""
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot("../screen_shot/defect1.png")
+"""
+
+#printing current date and time
+# date = datetime.now()
+# print(date)
+# #2023-09-06 08:38:24.469012
+
+# date = datetime.now()
+# d = date.strftime("%d/%m/%y %H:%M:%S")
+# print(d)
+# #06/09/23 08:41:55
+
+#example on saving screenshot with date-time as file name
+"""
+date = datetime.now()
+d = date.strftime("%d-%m-%y %H-%M-%S")
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot(f"../screen_shot/{d}.png")
+"""
