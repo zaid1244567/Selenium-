@@ -1,0 +1,92 @@
+"""
+handling screenshot:
+====================
+"""
+"""
+*while testing an application if expected result is not matches with actual result then testcase will be
+fail and it will be defect.
+*to log a defect in report we required screenshot, then we take screenshot.
+*always screenshot file name should be save with .png extenstion.
+*to take a screenshot we go below method,
+    driver.save_screenshot(file_name)
+*by default screenshot will save in current location/directory, if we want to save in particular location/folder
+then specify the path.
+"""
+
+from selenium.webdriver import  Chrome
+from time import sleep
+from datetime import datetime
+
+#example on saving screenshot in current location
+"""
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot("defect1.png")
+"""
+
+#example on saving screenshot in specified location
+"""
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot("../screen_shot/defect1.png")
+"""
+
+#printing current date and time
+# date = datetime.now()
+# print(date)
+# #2023-09-06 08:38:24.469012
+
+# date = datetime.now()
+# d = date.strftime("%d/%m/%y %H:%M:%S")
+# print(d)
+# #06/09/23 08:41:55
+
+#example on saving screenshot with date-time as file name
+"""
+date = datetime.now()
+d = date.strftime("%d-%m-%y %H-%M-%S")
+driver = Chrome()
+driver.get("https://www.fb.com")
+driver.maximize_window()
+driver.save_screenshot(f"../screen_shot/{d}.png")
+"""
+#############################################################################################################################################
+#07-09-2023
+"""
+stepno      action/description                      input                       expected result
+======      ==================                      =====                       ===============
+1           open browser and enter              http://localhost/login.do       login page should be
+            url.                                                                 display.
+2           enter valid UN and valid            UN:admin                        home page should be display.
+            PWD and click on login button.      PWD:manager
+3           click on logout button.                 NA                          login page should be display.
+"""
+"""
+def take_screenshot():
+    d = datetime.now()
+    dt = d.strftime("%d-%m-%y %H-%M-%S")
+    driver.save_screenshot(f"../screen_shot/{dt}.png")
+
+def verify_title(etitle):
+    assert driver.title == etitle, take_screenshot()
+
+driver = Chrome()
+driver.get("http://localhost/login.do")
+driver.maximize_window()
+verify_title("actiTIME - Login")
+driver.find_element("id", "username").send_keys("admin")
+driver.find_element("name", "pwd").send_keys("manager")
+driver.find_element("xpath", "//div[.='Login ']").click()
+verify_title("actiTIME - Enter Time-Track")
+driver.find_element("xpath", "//a[.='Logout']").click()
+verify_title("actiTIME - Login")
+driver.close()
+"""
+#######################################################################################################
+"""
+launch mamaeart-->face-->face wash-->select one product-->add to cart-->click on add to cart-->
+enter all details in checkout page --> place order do verification when needed and take screen shot.
+https://mamaearth.in/
+"""
