@@ -1,0 +1,221 @@
+"""
+synchronization:
+****************
+"""
+from selenium.webdriver import Chrome
+from time import sleep
+"""
+synchronization:
+----------------
+*the process of matching the speed (or) wavelength is called as synchronization.
+                        (or)
+*the process of matching the speed of selenium with application is called as synchronization.
+*selenium is very faster when compare to application.
+*to synch selenium with application we use below types,
+    *there are 4 types of synchronization,
+    1.sleep()
+    2.implicit wait
+    3.explicit wait
+    4.fluent wait
+
+1.sleep():
+==========
+*it is a method which is used to pause/stop the execution for certain period of time.
+*it wil wait until the specified time duration.
+
+drawback:
+---------
+*if element is visible within less than specified time duration then it will wait complete specified time duration.
+(because of these execution time will be more/waste if time)
+*in a single webpage if we have 'n' element to be wait/sync then we should write 'n' times sleep(), bcz of this
+code length will be increase and it is not a optimized code.
+
+2.implicit wait():
+------------------
+*to over come the draw back of sleep() method we use implicit wait().
+*it will sync only for find_element() and find_elements() methods.
+*if the "element is visible" less than specified time duration then it will not wait the remaining specified time,
+it will ignore the remaining time and it will continue the next line execution.
+*in a single webpage if we have 'n' elements, single implicit wait will sync all the 'n' elements.
+*if the "element is not visible" within the specified time duration then it will raise "NoSuchElement Exception".
+syntax:
+------
+    driver.implicitly_wait(10)
+                            |--->time should be in seconds
+"""
+
+#example on without synchronization
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+#ElementNotInteractableException: Message: element not interactable
+"""
+"""
+*according to above example we will get exception, because application is taking more time to load, but selenium
+is fastly trying to perform the action, so we will get execption.
+*to handle this we go synchronization.
+"""
+
+#example on sleep()
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+sleep(15)
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+"""
+"""
+*in the above example DOM is visible within 10seconds but it will wait for complete time duration, it is a brawback of lseep.
+*to overcome this will go implicitly_wait()
+"""
+
+#example on implicit wait
+"""
+driver = Chrome()
+driver.get("file:///C:/Users/Admin/Downloads/loading.html")
+driver.maximize_window()
+driver.implicitly_wait(15)
+driver.find_element("name", "fname").send_keys("automation")
+driver.find_element("name", "lname").send_keys("automation@123")
+"""
+
+#example on implicit wait
+"""
+driver = Chrome()
+driver.get("https://vtu.ac.in/en/?s=vtu+results")
+driver.maximize_window()
+driver.implicitly_wait(15)
+driver.find_element("xpath", "//span[.='Online Degree']").click()
+ids = driver.window_handles
+driver.switch_to.window(ids[1])
+driver.find_element("xpath", "//a[.=' apply now ']").click()
+"""
+##########################################################################################################################
+#16-09-2023
+
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+"""
+2.explicit wait/webdriver-wait:
+-------------------------------
+*it will synchronize all methods including find_element and find_elements.
+(all methods means it will sync for title, URL, frame, alert, element, text, etc....)
+*it should import from,
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.webdriver.support import expected_conditions
+*we has to create an object for WebDriverWait() class and pass "driver and time duration" as argument.
+*if condition matches with-in time then it will continue the execution, else
+it will throw TimeoutException.
+"""
+
+#example on verifying title without time duration
+"""
+driver = Chrome()
+driver.get("http://localhost/login.do")
+driver.implicitly_wait(5)
+driver.find_element("id", "username").send_keys("admin")
+driver.find_element("name", "pwd").send_keys("manager")
+driver.find_element("xpath", "//div[.='Login ']").click()
+assert driver.title=="actiTIME - Enter Time-Track", "Defect"
+print("home pgae display")
+#AssertionError: Defect
+"""
+""" 
+assert driver.title == "actiTIME - Enter Time-Track","Home page not displayed"
+AssertionError: Home page not displayed
+
+*according to above script we will get AssertionError, bcz selenium very fastly checking the title, but application takes time to 
+load, bcz of this getting Error.
+*to sync title, URL, etc we use explicitwait.
+"""
+
+#titl_is: compelte title matches
+"""
+driver = Chrome()
+driver.get("http://localhost/login.do")
+driver.implicitly_wait(5)
+driver.find_element("id", "username").send_keys("admin")
+driver.find_element("name", "pwd").send_keys("manager")
+driver.find_element("xpath", "//div[.='Login ']").click()
+wait = WebDriverWait(driver, 5)
+wait.until(EC.title_is("actiTIME - Enter Time-Track"))
+print("home page visible")
+"""
+
+#title_contains : wait until the title contains in the main title
+"""
+driver = Chrome()
+driver.get("https://mamaearth.in/")
+driver.maximize_window()
+driver.find_element("xpath", "(//a[.='Hair'])[1]").click()
+wait = WebDriverWait(driver, 10)
+wait.until(EC.title_contains("Best Hair Care"))
+print("Hair page displayed")
+"""
+
+#text_to_be_present_in_element : it will wait until the text in the element is present or not
+"""
+driver = Chrome()
+driver.get("https://www.grtjewels.com/")
+driver.maximize_window()
+wait = WebDriverWait(driver, 10)
+wait.until(EC.text_to_be_present_in_element(("xpath", "//a[@id='ui-id-14']/span[1]"), "Gifts & Gold Coins"))
+print("element is present in webpage")
+"""
+
+#visibility_of_element_located : it will wait until the element is visible in webpage
+"""
+driver = Chrome()
+driver.get("https://www.grtjewels.com/")
+driver.maximize_window()
+wait = WebDriverWait(driver, 10)
+wait.until(EC.visibility_of_element_located(("xpath", "//a[@id='ui-id-14']/span[1]")))
+print("element is present in webpage")
+"""
+#################################################################################################################
+"""
+4.fluent wait:
+--------------
+*when the polling frequency is customize then it is called as fluent wait.
+*by default is 0.5 second.
+"""
+"""
+driver = Chrome()
+driver.get("https://www.grtjewels.com/")
+driver.maximize_window()
+wait = WebDriverWait(driver, 10, poll_frequency=2)
+wait.until(EC.visibility_of_element_located(("xpath", "//a[@id='ui-id-14']/span[1]")))
+print("element is present in webpage")
+"""
+
+"""
+what is the difference b/w implicitly wait and explicit wait:
+************************************************************
+implicitly wait:
+----------------
+*it will synchronize only for find_element() and find_elements().
+*it will throw "NoSuchElement Exception" if element is not visible within time duration.
+*it is a method of browser class / web driver(no importing stmt).
+*we will pass 1 argument that is time duration in seconds.
+
+explicit wait:
+--------------
+*it will synchronize all methods including find_element() and find_elements().
+*it will throw "TimeOut Exception" if element is not visible within time duration.
+*it is a method of WebDriverWait class, and also we need to specify the "expected_conditions"
+we need to import both.
+*we will pass two argumnet that is "driver and time duration".
+"""
+
+"""
+assignment:
+-----------
+launch GRT jewellers
+click on gold-->click on stud-->
+select check box price below 10000-->click any stud-->enter pincode-->click on buy now
+-->click on place order-->login 
+"""
