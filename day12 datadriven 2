@@ -1,0 +1,237 @@
+#07-09-2023
+"""
+data driven testing:
+********************
+"""
+"""
+*testing the s/w(or)application with different set of input is called as data driven testing.
+*we will store different set of input in "excel".
+*excel is a standalone application, but selenium will automate on web-application we can't directly interact with excel,
+to automate excel we use 3rd party application that is "xlrd".
+
+steps to install xlrd:
+**********************
+click on file --> click on settings --> click on project --> click on python interpreter --> click on plus(+) icon
+--> search for xlrd --> click on specify version, select 1.2.0 version --> click on install package -->
+package install successfully message should be display.
+
+how to add excel file:
+**********************
+*create a folder named as "excel" in pycharm.
+*go to project location/path --> open excel folder --> right click on screen --> click on new
+--> click on microsoft excel worksheet --> give a name --> click on enter
+*open pycharm --> created file should display under excel folder.
+"""
+##########################################################################################################################################
+#08-09-2023
+"""
+steps to read data from excel file:
+***********************************
+step1: open an excel file
+step2: specify the sheet name
+step3: specify the row(row index starts from 0)
+step4: specify the column(col index starts from 0)
+step5: extract the cell value
+
+row():
+    *it will extract the specific row and result will be in "collection of dictionary inside a list".
+    *to extract specific column we should specify the index.
+    *in dictionary "cell value data-type" will be "key" and "cell-value" will be "value".
+value:
+    *it will extract "value" in a dictionary.
+nrows:
+    *it will return total no. of rows in a excel file
+ncols:
+    *it will return total no. of columns in a excel file.
+row_values():
+    *it will return list of specific row all cell/coulmn values.
+    *it will accept 2 argument, 1st row_index, 2nd column_index.
+    *if we dont specify coulmn_index entire row column/cell value will be extracting.
+    syntax: sheet.row_values(row_index, [col_index])
+"""
+
+from xlrd import *
+from selenium.webdriver import Chrome
+from time import sleep
+
+#extracting specific row
+"""
+#step1
+wb = open_workbook("../excel/sample.xlsx")
+#step2
+sh = wb.sheet_by_name("Sheet1")
+#step3
+row = sh.row(3)
+print(row)
+#[text:'automation', text:'automation123']
+#        0                    1
+"""
+#extract specific row and column
+"""
+#step1
+wb = open_workbook("../excel/sample.xlsx")
+#step2
+sh = wb.sheet_by_name("Sheet1")
+#step3
+row = sh.row(3)
+#step4
+col = row[0]
+print(col)
+#text:'automation'
+"""
+
+#extracting specific row column cell value
+"""
+#step1
+wb = open_workbook("../excel/sample.xlsx")
+#step2
+sh = wb.sheet_by_name("Sheet1")
+#step3
+row = sh.row(3)
+#step4
+col = row[0]
+#step5
+print(col.value)
+#'automation'
+"""
+
+#ws to print total number of rows and coulmns present in excel file
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+row_count = sh.nrows
+print(row_count)        #6
+col_count = sh.ncols
+print(col_count)        #2
+"""
+
+#wp to print all cell/column value of a specific row
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+data = sh.row_values(2)
+print(data)
+#['sample', 'sample@1234']
+"""
+
+#ws to extract specific row and column cell value
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+data = sh.row_values(2, 1)
+print(data)
+#'sample@1234'
+"""
+
+#wp to extract all rows columns/cell values.
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+row_count = sh.nrows
+for i in range(0, row_count):
+    data = sh.row_values(i)
+    print(data)
+"""
+"""
+['username', 'password']
+['demo', 'demo@123']
+['sample', 'sample@1234']
+['automation', 'automation123']
+['admin', 'manager']
+[3543.0, '%$GFY^%$']
+"""
+
+#wp to create a dictionary "username" as key and "password" as value
+#withput comprahension
+"""
+d = {}
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+row_count = sh.nrows
+for i in range(1, row_count):
+    data = sh.row_values(i)         
+    d[data[0]] = data[1]
+print(d)
+#{'demo': 'demo@123', 'sample': 'sample@1234', 'automation': 'automation123', 'admin': 'manager', 3543.0: '%$GFY^%$'}
+"""
+#with comprahension
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")     
+d = { sh.row_values(i)[0]:sh.row_values(i)[1] for i in range(1, sh.nrows) }     ##['sample', 'sample@1234'][0] : #['sample', 'sample@1234'][1] -> sample:sample@1234 
+print(d)
+#{'demo': 'demo@123', 'sample': 'sample@1234', 'automation': 'automation123', 'admin': 'manager', 3543.0: '%$GFY^%$'}
+"""
+
+#ws to test actitime login page with multiple set of input
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+d = { sh.row_values(i)[0]:sh.row_values(i)[1] for i in range(1, sh.nrows) }
+#{'demo': 'demo@123', 'sample': 'sample@1234', 'automation': 'automation123', 'admin': 'manager', 3543.0: '%$GFY^%$'}
+
+for un, pwd in d.items():
+    driver = Chrome()
+    driver.get("http://localhost/login.do")
+    driver.maximize_window()
+    driver.find_element("id", "username").send_keys(un)
+    driver.find_element("name", "pwd").send_keys(pwd)
+    driver.find_element("xpath", "//div[.='Login ']").click()
+    driver.close()
+"""
+
+"""
+d = {}
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("Sheet1")
+rount_count = sh.nrows
+for i in range(1, rount_count):
+    data = sh.row_values(i)
+    if isinstance(data[0], float) and isinstance(data[1], float):
+        data[0] = int(data[0])
+        data[1] = int(data[1])
+    else:
+        if isinstance(data[0], float):
+            data[0] = int(data[0])
+        elif isinstance(data[1], float):
+            data[1] = int(data[1])
+    d[data[0]] = data[1]
+
+for un, pwd in d.items():
+    driver = Chrome()
+    driver.get("http://localhost/login.do")
+    driver.maximize_window()
+    driver.find_element("id", "username").send_keys(un)
+    driver.find_element("name", "pwd").send_keys(pwd)
+    driver.find_element("xpath", "//div[.='Login ']").click()
+    driver.close()
+"""
+
+#reading locator name and value from excel file
+"""
+d = {}
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("locator")
+rount_count = sh.nrows
+for i in range(1, rount_count):
+    data = sh.row(i)
+    d[data[0].value] = (data[1].value, data[2].value)
+print(d)
+#{'username': ('id', 'username'), 'password': ('name', 'pwd'), 'login_btn': ('xpath', "//div[.='Login ']")}
+"""
+
+#ws to read locator name and value from excel and performing automation
+"""
+wb = open_workbook("../excel/sample.xlsx")
+sh = wb.sheet_by_name("locator")
+row_count = sh.nrows
+d = {sh.row(i)[0].value:(sh.row(i)[1].value, sh.row(i)[2].value) for i in range(1, row_count) }
+
+driver = Chrome()
+driver.get("http://localhost/login.do")
+driver.maximize_window()
+driver.find_element(d['username'][0], d['username'][1]).send_keys("admin")
+driver.find_element(d['password'][0], d['password'][1]).send_keys("manager")
+driver.find_element(d['login_btn'][0], d['login_btn'][1]).click()
+driver.close()
+"""
